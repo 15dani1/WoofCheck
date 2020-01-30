@@ -1,5 +1,86 @@
 import 'package:flutter/material.dart';
 import 'placeholder_widget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
+
+class MyImagePicker extends StatefulWidget {
+  @override
+  MyImagePickerState createState() => MyImagePickerState();
+}
+
+class MyImagePickerState extends State {
+
+  File imageURI;
+
+  Future getImageFromCamera() async {
+
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      imageURI = image;
+    });
+  }
+  
+  @override
+  initState() {
+    super.initState();
+    getImageFromCamera();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[ 
+        imageURI == null
+          ? Text('No image selected.')
+          : Image.file(imageURI, width: 300, height: 200, fit: BoxFit.cover),
+    ]))
+    );
+  }
+}
+
+class MyGalleryPicker extends StatefulWidget {
+  @override
+  MyGalleryPickerState createState() => MyGalleryPickerState();
+}
+
+class MyGalleryPickerState extends State {
+
+  File imageURI;
+
+  Future getImageFromGallery() async {
+
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      imageURI = image;
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    getImageFromGallery();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[ 
+        imageURI == null
+          ? Text('No image selected.')
+          : Image.file(imageURI, width: 300, height: 200, fit: BoxFit.cover),
+    ]))
+    );
+  }
+}
 
 class Home extends StatefulWidget {
  @override
@@ -12,8 +93,8 @@ class _HomeState extends State<Home> {
   int _currIndex = 0;
   final List<Widget> _children = [
     PlaceholderWidget(Colors.white),
-    PlaceholderWidget(Colors.orange[700]),
-    PlaceholderWidget(Colors.blue[700])
+    MyImagePicker(),
+    MyGalleryPicker()
   ];
  @override
  Widget build(BuildContext context) {
