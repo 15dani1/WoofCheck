@@ -1,6 +1,6 @@
 download instructions for dataset:
 
 1)The dataset is too large to upload to git repo
-2)Download images here: http://vision.stanford.edu/aditya86/ImageNetDogs/images.tar
-3)Untar to this dataset directory
-4)Rename folders to only breed names. For instance n463728_german_shepherd -> "German Shepherd"
+2)I renamed folders to only breed names. For instance n463728_german_shepherd -> "German Shepherd"
+2)Download images here: https://drive.google.com/open?id=1OknAy0b7Z7gz4vhJBMY8FXFh7febkiwO
+3)Unzip to this dataset directory
