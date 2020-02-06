@@ -1,4 +1,4 @@
-# AnimalSee
+# WoofCheck
 Every project begins with a 'Hello World'.
 
 # Setup Instructions
