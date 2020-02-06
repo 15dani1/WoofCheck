@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "886858655459",
+    "firebase_url": "https://woofcheck-74f72.firebaseio.com",
+    "project_id": "woofcheck-74f72",
+    "storage_bucket": "woofcheck-74f72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886858655459:android:e779df8835bae61c4087d6",
+        "android_client_info": {
+          "package_name": "com.example.animal_see"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886858655459-2874e56fo3o6v5oei9mgkugcthlufrr7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNulOjBQvkwQPS0ehem8uECXNsx84jzT0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886858655459-2874e56fo3o6v5oei9mgkugcthlufrr7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
