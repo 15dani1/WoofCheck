@@ -5,17 +5,24 @@ import 'dart:io';
 
 
 class MyImagePicker extends StatefulWidget {
+  final String src;
+  MyImagePicker(this.src);
+
   @override
-  MyImagePickerState createState() => MyImagePickerState();
+  MyImagePickerState createState() => new MyImagePickerState();
 }
 
-class MyImagePickerState extends State {
+class MyImagePickerState extends State<MyImagePicker> {
 
   File imageURI;
 
-  Future getImageFromCamera() async {
-
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+  Future getImageFromCamera(String src) async {
+    var image;
+    if (src == "camera"){
+      image = await ImagePicker.pickImage(source: ImageSource.camera);
+    } else if (src == "gallery"){
+      image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    }
 
     setState(() {
       imageURI = image;
@@ -25,47 +32,17 @@ class MyImagePickerState extends State {
   @override
   initState() {
     super.initState();
-    getImageFromCamera();
+    var src = widget.src;
+    getImageFromCamera(src);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[ 
-        imageURI == null
-          ? Text('No image selected.')
-          : Image.file(imageURI, width: 300, height: 200, fit: BoxFit.cover),
-    ]))
-    );
-  }
-}
-
-class MyGalleryPicker extends StatefulWidget {
-  @override
-  MyGalleryPickerState createState() => MyGalleryPickerState();
-}
-
-class MyGalleryPickerState extends State {
-
-  File imageURI;
-
-  Future getImageFromGallery() async {
-
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      imageURI = image;
-    });
-  }
-
-  @override
-  initState() {
-    super.initState();
-    getImageFromGallery();
-  }
+  void didUpdateWidget(MyImagePicker oldWidget) {
+    if (widget.src != oldWidget.src){
+      getImageFromCamera(widget.src);
+    }
+    super.didUpdateWidget(oldWidget);
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +69,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currIndex = 0;
   final List<Widget> _children = [
-    PlaceholderWidget(Colors.white),
-    MyImagePicker(),
-    MyGalleryPicker()
+    PlaceholderWidget(Colors.blue[100]),
+    MyImagePicker("camera"),
+    MyImagePicker("gallery")
   ];
  @override
  Widget build(BuildContext context) {

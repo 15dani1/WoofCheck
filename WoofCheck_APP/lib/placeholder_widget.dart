@@ -9,6 +9,9 @@ class PlaceholderWidget extends StatelessWidget {
  Widget build(BuildContext context) {
    return Container(
      color: color,
+     child: Container(
+       alignment: AlignmentDirectional(0.0, 0.0),
+       child:Text("HOME PAGE TEXT"))
    );
  }
 }
