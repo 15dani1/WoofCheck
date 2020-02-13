@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PlaceholderWidget extends StatelessWidget {
- final Color color;
+  final Color color;
+  final databaseReference = Firestore.instance;
+  PlaceholderWidget(this.color);
 
- PlaceholderWidget(this.color);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: RaisedButton(
+        onPressed: () {
+          createRecord('Gal Levy');
+        },
+        color: Colors.blue,
+        splashColor: Colors.red,
+      ),
+      color: color,
+    );
+  }
 
- @override
- Widget build(BuildContext context) {
-   return Container(
-     color: color,
-     child: Container(
-       alignment: AlignmentDirectional(0.0, 0.0),
-       child:Text("HOME PAGE TEXT"))
-   );
- }
+  void createRecord(String title) async {
+    await databaseReference.collection("books").document("1").setData({
+      'title': title,
+      'description': 'Gal Levy for President 2020'
+    });
+
+    DocumentReference ref = await databaseReference.collection("books").add({
+      'title': 'Flutter in Action',
+      'description': 'Complete Programming Guide to learn Flutter'
+    });
+    print(ref.documentID);
+  }
 }
