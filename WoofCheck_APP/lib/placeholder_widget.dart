@@ -11,7 +11,7 @@ class PlaceholderWidget extends StatelessWidget {
     return Container(
       child: RaisedButton(
         onPressed: () {
-          createRecord('JOhn Cena');
+          createRecord('Gal Levy');
         },
         color: Colors.blue,
         splashColor: Colors.red,
@@ -20,10 +20,10 @@ class PlaceholderWidget extends StatelessWidget {
     );
   }
 
-  void createRecord(String yeet) async {
+  void createRecord(String title) async {
     await databaseReference.collection("books").document("1").setData({
-      'title': yeet,
-      'description': 'Programming Guide for Dart'
+      'title': title,
+      'description': 'Gal Levy for President 2020'
     });
 
     DocumentReference ref = await databaseReference.collection("books").add({
