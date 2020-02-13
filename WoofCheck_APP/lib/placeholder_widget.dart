@@ -15,6 +15,7 @@ class PlaceholderWidget extends StatelessWidget {
         },
         color: Colors.blue,
         splashColor: Colors.red,
+								child: new Text('Click me!'),
       ),
       color: color,
     );
