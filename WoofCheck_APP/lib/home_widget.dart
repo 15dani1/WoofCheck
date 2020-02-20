@@ -44,8 +44,9 @@ class MyImagePickerState extends State<MyImagePicker> {
     Tflite.close();
     try {
       await Tflite.loadModel(
-            model: "./assets/converted_model.tflite",
-            labels: "./assets/labels.txt",
+            model: "assets/converted_model.tflite",
+            labels: "assets/labels.txt",
+            numThreads: 1
           );
       // print(res);
     } on PlatformException {
