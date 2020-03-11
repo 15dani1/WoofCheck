@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 // import 'package:image/image.dart' as i;
+import 'package:image_cropper/image_cropper.dart';
 import 'package:tflite/tflite.dart';
 
 class MyImagePicker extends StatefulWidget {
@@ -19,13 +20,30 @@ class MyImagePickerState extends State<MyImagePicker> {
   File imageURI;
 
   Future getImageFromCamera(ImageSource src) async {
-    var image = await ImagePicker.pickImage(source: src);
+    File image = await ImagePicker.pickImage(source: src);
+    // print('UNCROPPED');
     predictImage(image); 
+    // image = await cropped(image);
+    // print('CROPPED');
+    // predictImage(image); 
+  }
+  Future<File> cropped(File image) async {
+      return ImageCropper.cropImage(
+      sourcePath: image.path,
+      maxWidth: 224,
+      maxHeight: 224,
+      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0)
+    );
   }
   Future predictImage(File image) async {
     if (image == null) 
       return;
-    await recognizeImage(image);
+    //returns original image after classifying with cropped
+    // await recognizeImage(await cropped(image)); 
+
+    //returns cropped image after classifying with cropped
+    image = await cropped(image);
+    await recognizeImage(image); 
 
     setState(() {
       imageURI = image;
@@ -42,23 +60,20 @@ class MyImagePickerState extends State<MyImagePicker> {
 
   Future loadModel() async {
     Tflite.close();
+    // print('HERE');
     try {
       await Tflite.loadModel(
             model: "assets/converted_model.tflite",
             labels: "assets/labels.txt",
           );
+      // print("SUCCESS");
       // print(res);
     } on PlatformException {
-      // print('couldnt load model');
+      print('couldnt load model');
     }
   }
 
   Future recognizeImage(File image) async {
-    // RESIZE IMAGE CODE BELOW (dont forget to uncomment the image.dart import above):
-    // i.Image original = i.decodeImage(image.readAsBytesSync());
-    // i.Image sized = i.copyResize(original,width:224,height:224); // warning: this will distort rectangular images
-    // var recognitions = await Tflite.runModelOnImage( // apparently recognizeImageBinary() is slow on ios
-    //   path: sized.toString(),
     var recognitions = await Tflite.runModelOnImage( // apparently recognizeImageBinary() is slow on ios
       path: image.path,
       numResults: 3,
@@ -73,8 +88,9 @@ class MyImagePickerState extends State<MyImagePicker> {
     if (res.isEmpty){
       res = "\nidk what woof is this floof ¯\\_(ツ)_/¯";
     }
+    print(res);//delete later
     setState(() {
-      _recognitions = res;
+      _recognitions = res+"\n";
     });
   }
 
@@ -86,18 +102,36 @@ class MyImagePickerState extends State<MyImagePicker> {
     super.didUpdateWidget(oldWidget);
  }
 
+  List<Widget> _output(){
+    if (imageURI == null){
+      return <Widget>[Text("No image selected.")];
+    } else {
+      return <Widget>[
+        Image.file(imageURI, width: 224, height: 224, fit: BoxFit.cover),
+        Text(_recognitions),
+        RaisedButton(
+          child: Text("Again?"),
+          onPressed: () async {    
+            var image = await ImagePicker.pickImage(source: widget.src);
+            predictImage(image); 
+            },
+          color: Colors.blue,
+          textColor: Colors.white,
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          splashColor: Colors.grey,
+        )
+      ];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[ 
-        imageURI == null
-          ? Text("No image selected.")
-          : Image.file(imageURI, width: 400, height: 400, fit: BoxFit.cover),
-        Text(_recognitions),
-    ]))
+        children: _output()
+    ))
     );
   }
 }
