@@ -6,13 +6,11 @@ import re
 import sys
 import os
 
-#TODO: get rid of beautifulsoup parts, scale to 120 breeds x 70 images, check for duplicates
-
 subscription_key = "76011ec1055441a583fc59d2686f4a60" #api key for bing image search api
 search_url = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
 headers = {"Ocp-Apim-Subscription-Key" : subscription_key}
 params = {"q": "search_term", "count": 70, "imageType": "photo", "size": "medium"}
-DIR = "test_images/"
+DIR = "dataset/test_images/"
 images = []  #contains tuple of image_name, thumbnail_url, file_name
 
 #returns Tuple of searchresults (json), directory_path
