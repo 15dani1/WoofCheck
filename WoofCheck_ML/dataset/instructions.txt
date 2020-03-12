@@ -1,7 +1,11 @@
-download instructions for dataset:
+download instructions for dataset and test images:
 
 1)The dataset is too large to upload to git repo
 2)I renamed folders to only breed names. For instance n463728_german_shepherd -> "German Shepherd"
-2)Download images here: https://drive.google.com/open?id=1OknAy0b7Z7gz4vhJBMY8FXFh7febkiwO
-3)If you want train and test splits, download here instead: https://drive.google.com/open?id=1ErORBZ9k3yhf6fQ8FDLwwgJyfE5-Thla
-3)Unzip to this dataset directory
+3)Download images here: https://drive.google.com/open?id=1OknAy0b7Z7gz4vhJBMY8FXFh7febkiwO
+4)If you want train and test splits, download here instead: https://drive.google.com/open?id=1ErORBZ9k3yhf6fQ8FDLwwgJyfE5-Thla
+5)Unzip to this dataset directory
+
+for test images:
+1) Download images here: https://drive.google.com/file/d/193vW5oPnJb4JMYOseYDSzV6He61w5bZ9/view?usp=sharing
+2) Unzip to this dataset directory
