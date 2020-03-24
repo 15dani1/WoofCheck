@@ -105,18 +105,28 @@ class MyImagePickerState extends State<MyImagePicker> {
             _recognitions,
             style: TextStyle(fontSize: 25),
           ),
-          new RaisedButton(
-            child: Text("Again"),
-            onPressed: () async {    
-            var image = await ImagePicker.pickImage(source: widget.src);
-            predictImage(image); 
-            },
-            color: Colors.blue,
-            textColor: Colors.white,
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            splashColor: Colors.grey,
-        ),
-          new RaisedButton(
+          SizedBox(
+              width : 120.0,
+              height : 40.0,
+              child : new RaisedButton(
+              child: Text("Again"),
+              onPressed: () async {    
+              var image = await ImagePicker.pickImage(source: widget.src);
+              predictImage(image); 
+              },
+              color: Colors.blue,
+              textColor: Colors.white,
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              splashColor: Colors.grey,
+              )
+          ),
+          Padding(
+            padding : const EdgeInsets.all(10.0),
+          ),
+          SizedBox(
+            width : 120.0,
+            height : 40.0,
+            child : new RaisedButton(
             child: Text("New Image?"),
             onPressed: () async {    
             var image = await ImagePicker.pickImage(source: widget.src);
@@ -127,6 +137,7 @@ class MyImagePickerState extends State<MyImagePicker> {
             padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
             splashColor: Colors.grey,
           ),
+          )
         ],
       )];
     }
