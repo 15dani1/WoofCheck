@@ -77,7 +77,7 @@ class MyImagePickerState extends State<MyImagePicker> {
     for (var i = 0; i < recognitions.length; i++)
       res+="\n"+recognitions[i]['confidence'].toStringAsFixed(5)+"   "+recognitions[i]['label'];
     if (res.isEmpty){
-      res = "\nidk what woof is this floof ¯\\_(ツ)_/¯";
+      res = "\nThis does not appear to be a dog!";
     }
     print(res);//delete later
     setState(() {
@@ -98,20 +98,34 @@ class MyImagePickerState extends State<MyImagePicker> {
       return <Widget>[Text("No image selected.")];
     } else {
       return <Widget>[
+        Column(
+        children : <Widget>[
         Image.file(imageURI, width: 224, height: 224, fit: BoxFit.cover),
         Text(_recognitions),
-        RaisedButton(
-          child: Text("Again?"),
-          onPressed: () async {    
+          new RaisedButton(
+            child: Text("Again"),
+            onPressed: () async {    
             var image = await ImagePicker.pickImage(source: widget.src);
             predictImage(image); 
             },
-          color: Colors.blue,
-          textColor: Colors.white,
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-          splashColor: Colors.grey,
-        )
-      ];
+            color: Colors.blue,
+            textColor: Colors.white,
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            splashColor: Colors.grey,
+        ),
+          new RaisedButton(
+            child: Text("New Image?"),
+            onPressed: () async {    
+            var image = await ImagePicker.pickImage(source: widget.src);
+            predictImage(image); 
+            },
+            color: Colors.orange,
+            textColor: Colors.white,
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            splashColor: Colors.grey,
+          ),
+        ],
+      )];
     }
   }
 
@@ -137,7 +151,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currIndex = 0;
   final List<Widget> _children = [
-    PlaceholderWidget(Colors.blue[100]),
+    PlaceholderWidget(Colors.grey),
     MyImagePicker(ImageSource.camera),
     MyImagePicker(ImageSource.gallery)
   ];
