@@ -75,7 +75,7 @@ class MyImagePickerState extends State<MyImagePicker> {
 
     String res = "";
     for (var i = 0; i < recognitions.length; i++)
-      res+="\n"+recognitions[i]['confidence'].toStringAsFixed(5)+"   "+recognitions[i]['label'];
+      res+="\n"+recognitions[i]['label']+"   "+(recognitions[i]['confidence']*100).toStringAsFixed(3)+"%";
     if (res.isEmpty){
       res = "\nThis does not appear to be a dog!";
     }
@@ -100,8 +100,11 @@ class MyImagePickerState extends State<MyImagePicker> {
       return <Widget>[
         Column(
         children : <Widget>[
-        Image.file(imageURI, width: 224, height: 224, fit: BoxFit.cover),
-        Text(_recognitions),
+        Image.file(imageURI, width: 300, height: 300, fit: BoxFit.cover),
+          Text(
+            _recognitions,
+            style: TextStyle(fontSize: 25),
+          ),
           new RaisedButton(
             child: Text("Again"),
             onPressed: () async {    
