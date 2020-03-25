@@ -68,14 +68,14 @@ class MyImagePickerState extends State<MyImagePicker> {
     var recognitions = await Tflite.runModelOnImage( // apparently recognizeImageBinary() is slow on ios
       path: image.path,
       numResults: 3,
-      threshold: 0.20,
+      threshold: 0.55,
       imageMean: 0, //was 127.5
       imageStd: 255,//was 127.5
     );
 
     String res = "";
     for (var i = 0; i < recognitions.length; i++)
-      res+="\n"+recognitions[i]['label']+"   "+(recognitions[i]['confidence']*100).toStringAsFixed(3)+"%";
+      res+="\n"+recognitions[i]['label']+"   "+(recognitions[i]['confidence']*100).toStringAsFixed(2)+"%";
     if (res.isEmpty){
       res = "\nThis does not appear to be a dog!";
     }
