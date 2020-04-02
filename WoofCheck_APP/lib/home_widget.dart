@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 // import 'package:image/image.dart' as i;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:tflite/tflite.dart';
+import 'package:sortedmap/sortedmap.dart';
+
+var map = new SortedMap(Ordering.byValue());
 
 class MyImagePicker extends StatefulWidget {
   final ImageSource src;
@@ -21,7 +24,7 @@ class MyImagePickerState extends State<MyImagePicker> {
 
   Future getImageFromCamera(ImageSource src) async {
     File image = await ImagePicker.pickImage(source: src);
-    predictImage(image); 
+    predictImage(image, false); 
 
   }
   Future<File> cropped(File image) async {
@@ -32,12 +35,12 @@ class MyImagePickerState extends State<MyImagePicker> {
       aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0)
     );
   }
-  Future predictImage(File image) async {
+  Future predictImage(File image, bool useMap) async {
     if (image == null) 
       return;
     //returns cropped image after classifying with cropped
     image = await cropped(image);
-    await recognizeImage(image); 
+    await recognizeImage(image, useMap); 
 
     setState(() {
       imageURI = image;
@@ -64,22 +67,53 @@ class MyImagePickerState extends State<MyImagePicker> {
     }
   }
 
-  Future recognizeImage(File image) async {
+  Future recognizeImage(File image, bool useMap) async {
     var recognitions = await Tflite.runModelOnImage( // apparently recognizeImageBinary() is slow on ios
       path: image.path,
-      numResults: 3,
-      threshold: 0.55,
+      numResults: 120,
+      threshold: 0.0,
       imageMean: 0, //was 127.5
-      imageStd: 255,//was 127.5
+      imageStd: 255,//was 127.5R
     );
 
+    // update map
+    for (int i = 0; i < recognitions.length; i++){
+      if (useMap){
+        // print('HERE '+recognitions[i]['confidence'].toString()+' '+ map[recognitions[i]['label']].toString());
+        // print("A: "+ map[recognitions[i]['label']].toString());
+        // print("B: "+ recognitions[i]['confidence'].toString());
+        map.addAll({
+          recognitions[i]['label'] : (map[recognitions[i]['label']] + recognitions[i]['confidence'])/2
+        });
+        // print("AFTER AVG: "+map[recognitions[i]['label']].toString());
+      }else{
+        // print("BEFORE AVG: "+map[recognitions[i]['label']].toString());
+        map.addAll({
+          recognitions[i]['label'] : recognitions[i]['confidence']
+        });
+        // print("AFTER AVG: "+map[recognitions[i]['label']].toString());
+      }
+    }
+
+    // build res
     String res = "";
-    for (var i = 0; i < recognitions.length; i++)
-      res+="\n"+recognitions[i]['label']+"   "+(recognitions[i]['confidence']*100).toStringAsFixed(2)+"%";
+    List bestResult = map.keys.toList().reversed.toList();
+
+    for (int i = 0; i < 3; i++){
+      if (map[bestResult[i]] < 0.47){
+        break;
+      }
+      res+="\n"+bestResult[i]+"   "+(map[bestResult[i]]*100).toStringAsFixed(2)+"%";
+      if (map[bestResult[i]] > 0.80){
+        break;
+      }
+    }
+
     if (res.isEmpty){
       res = "\nThis does not appear to be a dog!";
     }
-    print(res);//delete later
+    // print(res);//delete later
+    // print(bestResult);
     setState(() {
       _recognitions = res+"\n";
     });
@@ -109,10 +143,10 @@ class MyImagePickerState extends State<MyImagePicker> {
               width : 120.0,
               height : 40.0,
               child : new RaisedButton(
-              child: Text("Again"),
+              child: Text("Retake Image?"),
               onPressed: () async {    
               var image = await ImagePicker.pickImage(source: widget.src);
-              predictImage(image); 
+              predictImage(image, true); 
               },
               color: Colors.blue,
               textColor: Colors.white,
@@ -130,7 +164,7 @@ class MyImagePickerState extends State<MyImagePicker> {
             child: Text("New Image?"),
             onPressed: () async {    
             var image = await ImagePicker.pickImage(source: widget.src);
-            predictImage(image); 
+            predictImage(image, false); 
             },
             color: Colors.orange,
             textColor: Colors.white,
@@ -147,10 +181,14 @@ class MyImagePickerState extends State<MyImagePicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-      child: Column(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: _output()
-    ))
+        )
+      )
+    )
     );
   }
 }
