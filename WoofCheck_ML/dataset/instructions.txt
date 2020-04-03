@@ -12,3 +12,6 @@ for web scraping images:
 
 for merged original dataset and web scraping images split into train and test:
 https://drive.google.com/open?id=1LxPbBH9zSURTTu5ICxSDMZve-eKsTkF1
+
+for dog recognition dataset:
+https://drive.google.com/open?id=1zkYxiUBFjIf9VyfHIhjgxtcYe4f_gsqO
