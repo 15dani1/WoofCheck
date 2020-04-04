@@ -23,6 +23,7 @@ dependencies:
   image_picker: ^0.6.1+10
   flutter_launcher_icons: "^0.7.4"
   sortedmap: 0.4.2+1
+  snaplist: ^0.1.8
   flutter:
     sdk: flutter
 

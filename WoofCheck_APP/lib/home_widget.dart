@@ -1,5 +1,7 @@
+import 'package:animal_see/help_page.dart';
 import 'package:flutter/material.dart';
 import 'placeholder_widget.dart';
+import 'help_page.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
@@ -59,7 +61,7 @@ class MyImagePickerState extends State<MyImagePicker> {
     Tflite.close();
     try {
       await Tflite.loadModel(
-            model: "assets/converted_model.tflite",
+            model: "assets/breed_classifier.tflite",
             labels: "assets/labels.txt",
           );
     } on PlatformException {
@@ -205,7 +207,8 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     PlaceholderWidget(Colors.grey),
     MyImagePicker(ImageSource.camera),
-    MyImagePicker(ImageSource.gallery)
+    MyImagePicker(ImageSource.gallery),
+    HelpPageWidget(Colors.black)
   ];
  @override
  Widget build(BuildContext context) {
@@ -222,15 +225,23 @@ class _HomeState extends State<Home> {
          new BottomNavigationBarItem(
            icon: new Icon(Icons.home),
            title: new Text('Home'),
+           backgroundColor: Colors.blue,
          ),
          new BottomNavigationBarItem(
            icon: new Icon(Icons.camera),
            title: new Text('Camera'),
+           backgroundColor: Colors.blue,
          ),
          new BottomNavigationBarItem(
-           icon: Icon(Icons.photo_album),
-           title: Text('Photo Gallery'),
-         )
+           icon: new Icon(Icons.photo_album),
+           title: new Text('Gallery'),
+           backgroundColor: Colors.blue,
+         ),
+         new BottomNavigationBarItem(
+           icon: new Icon(Icons.help),
+           title: new Text('FAQ'),
+           backgroundColor: Colors.blue,
+         ),
        ],
      ),
    );
