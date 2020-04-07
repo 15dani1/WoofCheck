@@ -220,7 +220,8 @@ class _HomeState extends State<Home> {
      body: _children[_currIndex],
      bottomNavigationBar: BottomNavigationBar(
        onTap: onButtonClick,
-       currentIndex: _currIndex, // this will be set when a new tab is tapped
+       currentIndex: _currIndex,
+       type: BottomNavigationBarType.fixed, // this will be set when a new tab is tapped
        items: [
          new BottomNavigationBarItem(
            icon: new Icon(Icons.home),

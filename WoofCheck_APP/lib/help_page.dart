@@ -23,7 +23,7 @@ class IntroScreenState extends State<MyFAQPage> {
     slides.add(
       new Slide(
         title: "CAMERA",
-        description: "Click 'Photo Gallery' to select an image from your gallery or 'Camera' to take a new image.",
+        description: "Click 'Gallery' to select an image from your gallery or 'Camera' to take a new image.",
         pathImage: "images/photo_eraser.png",
         backgroundColor: Color(0xfff5a623),
       ),
@@ -32,7 +32,7 @@ class IntroScreenState extends State<MyFAQPage> {
       new Slide(
         title: "ZOOM",
         description: "Use the zoom and rotate tools to edit your image. Ensure your dog is centered in the image.",
-        pathImage: "../images/cropping.jpg",
+        pathImage: "assets/cropping.jpg",
         backgroundColor: Color(0xff203152),
       ),
     );
