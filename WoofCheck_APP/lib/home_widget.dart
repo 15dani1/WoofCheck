@@ -145,7 +145,7 @@ class MyImagePickerState extends State<MyImagePicker> {
               width : 120.0,
               height : 40.0,
               child : new RaisedButton(
-              child: Text("Retake Image?"),
+              child: Text("Retake Image"),
               onPressed: () async {    
               var image = await ImagePicker.pickImage(source: widget.src);
               predictImage(image, true); 
@@ -163,7 +163,7 @@ class MyImagePickerState extends State<MyImagePicker> {
             width : 120.0,
             height : 40.0,
             child : new RaisedButton(
-            child: Text("New Image?"),
+            child: Text("New Image"),
             onPressed: () async {    
             var image = await ImagePicker.pickImage(source: widget.src);
             predictImage(image, false); 
@@ -205,10 +205,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currIndex = 0;
   final List<Widget> _children = [
-    PlaceholderWidget(Colors.grey),
+    HomeWidget(Colors.blue),
     MyImagePicker(ImageSource.camera),
-    MyImagePicker(ImageSource.gallery),
-    HelpPageWidget(Colors.black)
+    MyImagePicker(ImageSource.gallery),  //MyImagePickerState(Colors.black)
+    MyFAQPage("FAQ"),
   ];
  @override
  Widget build(BuildContext context) {

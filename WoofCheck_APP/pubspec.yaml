@@ -24,6 +24,8 @@ dependencies:
   flutter_launcher_icons: "^0.7.4"
   sortedmap: 0.4.2+1
   snaplist: ^0.1.8
+  flutter_swiper: ^1.1.6
+  intro_slider: ^2.2.9
   flutter:
     sdk: flutter
 
