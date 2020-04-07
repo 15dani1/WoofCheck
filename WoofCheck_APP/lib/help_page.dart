@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'placeholder_widget.dart';
 
 
 class MyFAQPage extends StatefulWidget {
@@ -22,38 +21,39 @@ class IntroScreenState extends State<MyFAQPage> {
 
     slides.add(
       new Slide(
-        title: "CAMERA",
+        title: "Select",
         description: "Click 'Gallery' to select an image from your gallery or 'Camera' to take a new image.",
-        pathImage: "images/photo_eraser.png",
-        backgroundColor: Color(0xfff5a623),
+        pathImage: "assets/campic.png",
+        heightImage: 55.0,
+        backgroundColor: Colors.orange,
       ),
     );
     slides.add(
       new Slide(
-        title: "ZOOM",
+        title: "Edit",
         description: "Use the zoom and rotate tools to edit your image. Ensure your dog is centered in the image.",
         pathImage: "assets/cropping.jpg",
         heightImage: 350.0,
-        backgroundColor: Color(0xff203152),
+        backgroundColor: Colors.blue,
       ),
     );
     slides.add(
       new Slide(
-        title: "RESULTS",
+        title: "Result",
         description:
         "View your results! If you would like a better reading, click 'Retake Image' and submit another picture of your dog.",
         pathImage: "assets/result.jpg",
         heightImage: 350.0,
-        backgroundColor: Color(0xff9932CC),
+        backgroundColor: Colors.orange,
       ),
     );
     slides.add(
       new Slide(
-        title: "NEW IMAGE",
+        title: "Again",
         description: "If you would like to try the app on a new dog, select 'New Image'.",
         pathImage: "assets/retake.jpg",
         heightImage: 350.0,
-        backgroundColor: Color(0xff008000),
+        backgroundColor: Colors.blue,
       ),
     );
   }
@@ -62,7 +62,7 @@ class IntroScreenState extends State<MyFAQPage> {
   Widget build(BuildContext context) {
     return new IntroSlider(
       slides: this.slides,
-      isShowDoneBtn: true,
+      renderDoneBtn: Text(""), // since isShowDoneBtn: false doesn't work, just hide it with empty text
       isShowPrevBtn: true,
       isShowSkipBtn: false,
     );

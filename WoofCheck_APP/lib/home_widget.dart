@@ -208,7 +208,7 @@ class _HomeState extends State<Home> {
     HomeWidget(Colors.blue),
     MyImagePicker(ImageSource.camera),
     MyImagePicker(ImageSource.gallery),  //MyImagePickerState(Colors.black)
-    MyFAQPage("FAQ"),
+    MyFAQPage("Help"),
   ];
  @override
  Widget build(BuildContext context) {
@@ -240,7 +240,7 @@ class _HomeState extends State<Home> {
          ),
          new BottomNavigationBarItem(
            icon: new Icon(Icons.help),
-           title: new Text('FAQ'),
+           title: new Text('Help'),
            backgroundColor: Colors.blue,
          ),
        ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'help_page.dart';
 import 'home_widget.dart';
 
 void main() => runApp(App());
