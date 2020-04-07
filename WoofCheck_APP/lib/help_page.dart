@@ -33,6 +33,7 @@ class IntroScreenState extends State<MyFAQPage> {
         title: "ZOOM",
         description: "Use the zoom and rotate tools to edit your image. Ensure your dog is centered in the image.",
         pathImage: "assets/cropping.jpg",
+        heightImage: 350.0,
         backgroundColor: Color(0xff203152),
       ),
     );
@@ -41,7 +42,8 @@ class IntroScreenState extends State<MyFAQPage> {
         title: "RESULTS",
         description:
         "View your results! If you would like a better reading, click 'Retake Image' and submit another picture of your dog.",
-        pathImage: "images/photo_ruler.png",
+        pathImage: "assets/result.jpg",
+        heightImage: 350.0,
         backgroundColor: Color(0xff9932CC),
       ),
     );
@@ -49,21 +51,20 @@ class IntroScreenState extends State<MyFAQPage> {
       new Slide(
         title: "NEW IMAGE",
         description: "If you would like to try the app on a new dog, select 'New Image'.",
-        pathImage: "images/photo_pencil.png",
+        pathImage: "assets/retake.jpg",
+        heightImage: 350.0,
         backgroundColor: Color(0xff008000),
       ),
     );
-  }
-
-  void onDonePress() {
-    HomeWidget(Colors.blue);
   }
 
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
       slides: this.slides,
-      onDonePress: this.onDonePress,
+      isShowDoneBtn: true,
+      isShowPrevBtn: true,
+      isShowSkipBtn: false,
     );
   }
 }
