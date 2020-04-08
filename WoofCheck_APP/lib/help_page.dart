@@ -23,8 +23,8 @@ class IntroScreenState extends State<MyFAQPage> {
       new Slide(
         title: "Select",
         description: "Click 'Gallery' to select an image from your gallery or 'Camera' to take a new image.",
-        pathImage: "assets/campic.png",
-        heightImage: 55.0,
+        pathImage: "assets/home.jpeg",
+        heightImage: 350.0,
         backgroundColor: Colors.orange,
       ),
     );

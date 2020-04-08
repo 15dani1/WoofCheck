@@ -9,6 +9,7 @@ class App extends StatelessWidget {
    return MaterialApp(
      title: 'WoofCheck',
      home: Home(),
+     debugShowCheckedModeBanner: false,
    );
  }
 }
