@@ -71,7 +71,7 @@ class MyImagePickerState extends State<MyImagePicker> {
   // is dog check
   Future recognizeImage(File image, bool useMap) async {
     loadModel("assets/dog_recognition.tflite", "assets/labels_recognition.txt");
-    var isdog = await Tflite.runModelOnImage( 
+    var dogRec = await Tflite.runModelOnImage( 
       path: image.path,
       numResults: 2,
       threshold: 0.0,
@@ -80,7 +80,7 @@ class MyImagePickerState extends State<MyImagePicker> {
     );
 
     print("DOG");
-    print(isdog);
+    print(dogRec);
 
     // breed classification
     loadModel("assets/breed_classifier.tflite", "assets/labels.txt"); 
@@ -112,22 +112,26 @@ class MyImagePickerState extends State<MyImagePicker> {
         });
       }
     }
+    bool isDog;
+    if(dogRec[0]['label'] == "is_a_dog"){
+      isDog = true;
+    }
+    else{
+      isDog = false;
+    }
 
     // build res
     String res = "";
     List bestResult = map.keys.toList().reversed.toList();
 
     for (int i = 0; i < 3; i++){
-      if (map[bestResult[i]] < 0.47){
+      if (map[bestResult[i]] < 0.03){
         break;
       }
       res+="\n"+bestResult[i]+"   "+(map[bestResult[i]]*100).toStringAsFixed(2)+"%";
-      if (map[bestResult[i]] > 0.80){
-        break;
-      }
     }
 
-    if (res.isEmpty){
+    if (!isDog){
       res = "\nThis does not appear to be a dog!";
     }
     // print(res);//delete later
