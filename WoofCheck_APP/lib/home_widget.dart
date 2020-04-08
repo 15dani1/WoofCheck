@@ -54,46 +54,62 @@ class MyImagePickerState extends State<MyImagePicker> {
     super.initState();
     ImageSource src = widget.src;
     getImageFromCamera(src);
-    loadModel();
   }
 
-  Future loadModel() async {
+  Future loadModel(String model, String labels) async {
     Tflite.close();
     try {
       await Tflite.loadModel(
-            model: "assets/breed_classifier.tflite",
-            labels: "assets/labels.txt",
+            model: model, //"assets/breed_classifier.tflite"
+            labels: labels,
           );
     } on PlatformException {
       print('couldnt load model');
     }
   }
 
+  // is dog check
   Future recognizeImage(File image, bool useMap) async {
+    loadModel("assets/dog_recognition.tflite", "assets/labels_recognition.txt");
+    var isdog = await Tflite.runModelOnImage( 
+      path: image.path,
+      numResults: 2,
+      threshold: 0.0,
+      imageMean: 0, 
+      imageStd: 255,
+    );
+
+    print("DOG");
+    print(isdog);
+
+    // breed classification
+    loadModel("assets/breed_classifier.tflite", "assets/labels.txt"); 
     var recognitions = await Tflite.runModelOnImage( // apparently recognizeImageBinary() is slow on ios
       path: image.path,
       numResults: 120,
       threshold: 0.0,
-      imageMean: 0, //was 127.5
-      imageStd: 255,//was 127.5R
+      imageMean: 0, 
+      imageStd: 255,
     );
 
+    print("BREED");
+    print(recognitions);
+    
     // update map
     for (int i = 0; i < recognitions.length; i++){
       if (useMap){
-        // print('HERE '+recognitions[i]['confidence'].toString()+' '+ map[recognitions[i]['label']].toString());
-        // print("A: "+ map[recognitions[i]['label']].toString());
-        // print("B: "+ recognitions[i]['confidence'].toString());
+        int denominator = 2;
+        if (map[recognitions[i]['label']] == null){ // handle null value exception
+          map[recognitions[i]['label']] = 0;
+          denominator-=1;
+        }
         map.addAll({
-          recognitions[i]['label'] : (map[recognitions[i]['label']] + recognitions[i]['confidence'])/2
+          recognitions[i]['label'] : (map[recognitions[i]['label']] + recognitions[i]['confidence'])/denominator
         });
-        // print("AFTER AVG: "+map[recognitions[i]['label']].toString());
       }else{
-        // print("BEFORE AVG: "+map[recognitions[i]['label']].toString());
         map.addAll({
           recognitions[i]['label'] : recognitions[i]['confidence']
         });
-        // print("AFTER AVG: "+map[recognitions[i]['label']].toString());
       }
     }
 
