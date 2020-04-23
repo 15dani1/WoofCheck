@@ -24,7 +24,7 @@ class IntroScreenState extends State<MyFAQPage> {
         title: "Select",
         description: "Click 'Gallery' to select an image from your gallery or 'Camera' to take a new image.",
         pathImage: "assets/home.jpeg",
-        heightImage: 350.0,
+        foregroundImageFit: BoxFit.contain,
         backgroundColor: Colors.orange,
       ),
     );
@@ -33,7 +33,7 @@ class IntroScreenState extends State<MyFAQPage> {
         title: "Edit",
         description: "Use the zoom and rotate tools to edit your image. Ensure your dog is centered in the image.",
         pathImage: "assets/cropping.jpg",
-        heightImage: 350.0,
+        foregroundImageFit: BoxFit.contain,
         backgroundColor: Colors.blue,
       ),
     );
@@ -43,7 +43,7 @@ class IntroScreenState extends State<MyFAQPage> {
         description:
         "View your results! If you would like a better reading, click 'Retake Image' and submit another picture of your dog.",
         pathImage: "assets/result.jpg",
-        heightImage: 350.0,
+        foregroundImageFit: BoxFit.contain,
         backgroundColor: Colors.orange,
       ),
     );
@@ -52,7 +52,7 @@ class IntroScreenState extends State<MyFAQPage> {
         title: "Again",
         description: "If you would like to try the app on a new dog, select 'New Image'.",
         pathImage: "assets/retake.jpg",
-        heightImage: 350.0,
+        foregroundImageFit: BoxFit.contain,
         backgroundColor: Colors.blue,
       ),
     );
@@ -63,7 +63,7 @@ class IntroScreenState extends State<MyFAQPage> {
     return new IntroSlider(
       slides: this.slides,
       renderDoneBtn: Text(""), // since isShowDoneBtn: false doesn't work, just hide it with empty text
-      isShowPrevBtn: true,
+      // isShowPrevBtn: true, // for some reason this ruins the center alignment of the progress indicator
       isShowSkipBtn: false,
     );
   }
